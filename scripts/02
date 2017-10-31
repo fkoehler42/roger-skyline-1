@@ -1,0 +1,12 @@
+#!/bin/bash
+
+LOGFILE=/var/log/update_script.log
+
+apt-get update -y >> $LOGFILE 2>&1
+apt-get upgrade -y >> $LOGFILE 2>&1
+
+# to make this script a cron task, execute crontab -e
+# then add the following line :
+# 0 4 * * 1 SCRIPT_ABSOLUTE_PATH
+# save and exit
+

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+SUM_FILE="/tmp/crontab_sum"
+
+if [[ -f $SUM_FILE ]]; then
+  old_sum=`cat $SUM_FILE`
+  md5sum /etc/crontab > $SUM_FILE
+  sum=`cat $SUM_FILE`
+  if [[ $sum != $old_sum ]]; then
+    echo "The content of /etc/crontab file has been modified." | mail -s "Cron" root
+  fi
+else
+  md5sum /etc/crontab > $SUM_FILE
+fi
+
+# to make this script a cron task, execute crontab -e
+# then add the following line :
+# 0 0 * * * SCRIPT_ABSOLUTE_PATH
+# save and exit
